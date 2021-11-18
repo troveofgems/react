@@ -1,24 +1,31 @@
-import React, {Component} from 'react';
+import React, {useEffect, useContext} from 'react';
+import GithubContext from "../../context/github/github.context";
 import Spinner from "../layout/Spinner/Spinner";
 import {Link} from "react-router-dom";
 import {OPEN_NEW_PAGE, SECURITY_OPTS} from "../../constants/generic.constants";
 import Repos from "../repos/Repos";
 
-class User extends Component {
-  componentDidMount() {
-    this.props.setLoading();
-    setTimeout(() => {
-      console.log('Simulating Loading');
-      this.props.getUser(this.props.match.params.login);
-      this.props.getUserRepos(this.props.match.params.login);
-    }, 1000);
-  }
-  render() {
-    const {
+const User = ({ match }) => {
+  const
+    githubContext = useContext(GithubContext),
+    {
+      loading, setLoading, getUser, user, getUserRepos
+    } = githubContext,
+    {
       name, avatar_url, location, bio, blog, login, html_url, followers, following, public_repos, public_gists,
       hireable
-    } = this.props.user;
-    const { loading } = this.props;
+    } = user;
+
+  useEffect(() => {
+    setLoading();
+    console.log('Simulating Loading');
+    setTimeout(() => {
+      getUser(match.params.login);
+      getUserRepos(match.params.login);
+    }, 1000);
+    // eslint-disable-next-line
+  }, []);
+
     return (
       <>
         {loading && (<Spinner />)}
@@ -59,7 +66,7 @@ class User extends Component {
                     <li>
                       {location && (
                         <>
-                          <strong>Company: </strong> {location}
+                          <strong>Location: </strong> {location}
                         </>
                       )}
                     </li>
@@ -79,13 +86,12 @@ class User extends Component {
                 <div>Public Repos: {public_repos}</div>
                 <div>Public Gists: {public_gists}</div>
               </div>
-              <Repos repos={this.props.repos} />
+              <Repos />
             </div>
           </div>
         )}
       </>
     );
-  }
-}
+};
 
 export default User;

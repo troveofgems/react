@@ -1,9 +1,13 @@
 // Class Component - React Lists & State Passing Props
-import React from 'react';
+import React, { useContext } from 'react';
 import UserItem from "./UserItem";
 import Spinner from "../layout/Spinner/Spinner";
+import GithubContext from "../../context/github/github.context";
 
-const Users = ({ users, loading }) => {
+const Users = () => {
+  const
+    githubContext = useContext(GithubContext),
+    {loading, users} = githubContext;
   return (
     <>
       {loading ? (
