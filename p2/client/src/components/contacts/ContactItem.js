@@ -5,30 +5,30 @@ import ContactContext from '../../context/contact/Contact.context';
 const ContactItem = ({ contact }) => {
   const
     contactContext = useContext(ContactContext),
-    { id, name, email, phone, contactType = 'personal' } = contact,
+    { _id, firstName, lastName, email, telephone, contactType = 'personal' } = contact,
     { deleteContact, setCurrentContact, clearCurrentContact } = contactContext;
 
   const processDeleteRequest = () => {
     let
-      confirmationCode = `${id.split('-', 1)}`,
+      confirmationCode = `${_id.substring(_id.length - 7)}`,
       confirmationPrompt = prompt(
       'You must confirm that you would like to delete this contact. Please type, or, copy & paste the ' +
-        'following id into the field and select enter to continue with removal\n' + `${confirmationCode}`
+        `following id into the field and select enter to continue with removal\n\n\t ${confirmationCode}`
       );
     if (confirmationPrompt === confirmationCode) {
+      deleteContact(_id)
       clearCurrentContact(); // If Any Exists
-      return deleteContact(id);
+      return null;
     }
-
     return alert('Contact was not deleted.');
   }
 
   const onDelete = () => processDeleteRequest();
 
   return (
-    <div className={'card bg-light'} key={id}>
+    <div className={'card bg-light'} key={_id}>
       <h3 className={"text-primary text-left"}>
-        {name}{' '}
+        {firstName}{' '}{lastName}
         <span
           style={customStyle_Span}
           className={('badge ' + (contactType === 'professional')) ? 'badge-success' : 'badge-primary' }
@@ -39,14 +39,14 @@ const ContactItem = ({ contact }) => {
       <ul className={"list"}>
         {email && (
           <li>
-            <i className={"fas fa-envelope-open"} />
+            <i className={"fas fa-envelope-open"} />{' '}
             {email}
           </li>
         )}
-        {phone && (
+        {telephone && (
           <li>
-            <i className={"fas fa-phone"} />
-            {phone}
+            <i className={"fas fa-phone"} />{' '}
+            {telephone}
           </li>
         )}
       </ul>

@@ -1,21 +1,13 @@
 import React, { useContext } from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'; // See: https://reactrouter.com/docs/en/v6/api#navigate
 import AuthContext from '../../context/auth/Auth.context';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const
-    authContext = useContext(AuthContext),
-    { isAuthenticated, loading } = authContext;
+function PrivateRoute({ children }) {
+  //const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, loading } = authContext;
 
-  return (
-    <Route { ...rest } element={props => !isAuthenticated && !loading ? (
-      <>
-        <Navigate to={'/login'} />
-      </>
-    ) : (
-      <Component {...props} />
-    )} />
-  );
-};
+  return !isAuthenticated && !loading ? <Navigate to={'/login'} /> : children;
+}
 
 export default PrivateRoute;

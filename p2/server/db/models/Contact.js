@@ -25,6 +25,12 @@ const ContactSchema = mongoose.Schema({
   url: {
     type: String
   },
+  contactType: {
+    type: String,
+    enum: ['personal', 'professional'],
+    default: 'personal',
+    required: true
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users'

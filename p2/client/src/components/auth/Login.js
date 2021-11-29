@@ -1,27 +1,28 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AlertContext from '../../context/alert/Alert.context';
 import AuthContext from '../../context/auth/Auth.context';
 
-const Login = (props) => {
+const Login = () => {
   const
     alertContext = useContext(AlertContext),
     authContext = useContext(AuthContext);
+
+  let navigate = useNavigate();
 
   const
     { setAlert } = alertContext,
     { login, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
-    if (isAuthenticated) {
-      props.history.push('/');
-    }
+    if (isAuthenticated) return navigate('/');
 
     if (error) {
       setAlert(error, 'danger');
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
     email: '',
@@ -60,28 +61,49 @@ const Login = (props) => {
         </div>
         <div className={"form-group"}>
           <h5>Authentication Token Type</h5>
+          <div className={""}>
+            <input
+              type={'radio'}
+              name={'tokenRequestType'}
+              value={'public'}
+              checked={tokenRequestType === 'public'}
+              onChange={onChange}
+            />{' '}Secure{' '}
+            <input
+              type={'radio'}
+              name={'tokenRequestType'}
+              value={'private'}
+              checked={tokenRequestType === 'private'}
+              onChange={onChange}
+            />{' '}Semi-Secure{' '}
+          </div>
           <small>
-            Are you on a public computer or un-trusted network? Keep the default selection when logging in.
-            The effect is that your login session times will only be valid for 5 minutes prior to auto-logout out of
-            the application. If you're connecting from a trusted network like your home, then select the private
-            option for a generous 60 minutes of session time.
+            {tokenRequestType === "public" && (
+              <>
+                <div>
+                  <strong>On a public computer or un-trusted network?</strong>
+                </div>
+                Keep the default selection when logging in.
+                The effect is that your login session times will only be valid
+                for 5 minutes prior to auto-logout out of the application.
+              </>
+            )}
+            {tokenRequestType === "private" && (
+              <>
+                <div>
+                  <strong>Connecting from a trusted network like your home or secure device?</strong>
+                </div>
+                Select the Semi-Secure option for a generous 8 hours of session time.
+                This is not necessary nor really recommended: simply provided for your (insecure) convenience.
+                <div>
+                  <img src={"img/lazy-guard.gif"} alt={"Lazy Security Guard Gif"}
+                    style={{width: '25%', height: '200px'}}
+                  />
+                </div>
+              </>
+            )}
           </small>
-          <input
-            type={'radio'}
-            name={'tokenRequestType'}
-            value={'public'}
-            checked={tokenRequestType === 'public'}
-            onChange={onChange}
-          />Public{' '}
-          <input
-            type={'radio'}
-            name={'tokenRequestType'}
-            value={'private'}
-            checked={tokenRequestType === 'private'}
-            onChange={onChange}
-          />Private{' '}
         </div>
-        <input type={"submit"} value={"Login"} className={"btn btn-primary btn-block"} />
         <div>
           <input type={'submit'} value={'Login'} className={"btn btn-primary btn-block"}/>
         </div>

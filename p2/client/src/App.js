@@ -31,7 +31,11 @@ const App = () => {
           <div className="container">
             <Alerts />
             <Routes>
-              <PrivateRoute path={"/"} element={<Home/>}/>
+              <Route path={"/"} element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }/>
               <Route path={"/about"} element={<About/>}/>
               <Route path={"/register"} element={<Register/>}/>
               <Route path={"/login"} element={<Login/>}/>

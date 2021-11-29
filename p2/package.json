@@ -9,10 +9,13 @@
   "scripts": {
     "client": "yarn --cwd client start",
     "client-install": "yarn --cwd client install",
+    "client-build": "yarn --cwd client build",
     "server": "yarn --cwd server start",
+    "server-dev": "yarn --cwd server watch",
     "server-install": "yarn --cwd server install",
     "install-project-deps": "yarn client-install && yarn server-install",
-    "concur": "concurrently \"yarn run client\" \"yarn run server\""
+    "concur": "concurrently \"yarn run client\" \"yarn run server\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

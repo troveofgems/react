@@ -15,7 +15,7 @@ const registerUser = async (req, res, next) => {
   try {
     let userAlreadyExists = await User.findOne({ email });
     if (userAlreadyExists) {
-      let data = { msg: 'User Already Exists', success: false };
+      let data = { msg: 'User Already Exists', success: false, bac: 400 };
       return sendAPIResponse(res, 400, data);
     }
 

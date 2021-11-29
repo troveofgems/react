@@ -1,50 +1,80 @@
 import {
-  ADD_CONTACT, DELETE_CONTACT, UPDATE_CONTACT,
+  ADD_CONTACT, DELETE_CONTACT, UPDATE_CONTACT, CONTACT_ERROR, GET_CONTACTS, CLEAR_CONTACTS,
   SET_CURRENT, CLEAR_CURRENT,
   FILTER_CONTACTS, CLEAR_FILTER
 } from '../types';
 
-export default (state, action) => {
+const ContactReducer = (state, action) => {
   switch(action.type) {
+    case GET_CONTACTS:
+      return {
+        ...state,
+        contacts: action.payload,
+        loading: false
+      }
+    case CLEAR_CONTACTS:
+      return {
+        ...state,
+        contacts: null,
+        filtered: null,
+        contact: null,
+        error: null
+      };
     case ADD_CONTACT:
       return {
         ...state,
-        contacts: [...state.contacts, action.payload]
+        contacts: [action.payload, ...state.contacts],
+        loading: false
       };
     case UPDATE_CONTACT:
       return {
         ...state,
-        contacts: state.contacts.map(contact => contact.id === action.payload.id ? action.payload : contact)
+        contacts: state.contacts.map(contact => contact._id === action.payload._id ? action.payload : contact),
+        loading: false
       };
     case DELETE_CONTACT:
+      console.log('contacts are: ', state.contacts);
       return {
         ...state,
-        contacts: state.contacts.filter(contact => contact.id !== action.payload)
+        contacts: state.contacts.filter(contact => contact._id !== action.payload),
+        loading: false
       };
     case SET_CURRENT:
       return {
         ...state,
-        current: action.payload
+        current: action.payload,
+        loading: false
       };
     case CLEAR_CURRENT:
       return {
         ...state,
-        current: null
+        current: null,
+        loading: false
       };
     case FILTER_CONTACTS:
       return {
         ...state,
         filtered: state.contacts.filter(contact => {
           const regex = new RegExp(`${action.payload}`, 'gi');
-          return contact.name.match(regex) || contact.email.match(regex);
-        })
+          return contact.firstName.match(regex) || contact.lastName.match(regex) || contact.email.match(regex);
+        }),
+        loading: false
       };
     case CLEAR_FILTER:
       return {
         ...state,
-        filtered: null
+        filtered: null,
+        loading: false
       };
+    case CONTACT_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false
+      }
     default:
       return state;
   }
-}
+};
+
+export default ContactReducer;

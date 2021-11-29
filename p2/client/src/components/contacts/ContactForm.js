@@ -6,9 +6,14 @@ const ContactForm = (props) => {
     contactContext = useContext(ContactContext),
     {addContact, current, clearCurrentContact, updateContact} = contactContext,
     [contact, setContact] = useState({
-      name: '',
+      firstName: '',
+      lastName: '',
+      company: '',
+      birthday: '',
+      notes: '',
       email: '',
-      phone: '',
+      telephone: '',
+      url: '',
       contactType: 'personal'
     });
 
@@ -18,15 +23,20 @@ const ContactForm = (props) => {
       setContact(current);
     } else {
       setContact({
-        name: '',
+        firstName: '',
+        lastName: '',
+        company: '',
+        birthday: '',
+        notes: '',
         email: '',
-        phone: '',
+        telephone: '',
+        url: '',
         contactType: 'personal'
       });
     }
   }, [contactContext, current]);
 
-  const {name, email, phone, contactType} = contact;
+  const {firstName, lastName, company, birthday, notes, url, email, telephone, contactType} = contact;
 
   const clearAll = () => {
     clearCurrentContact();
@@ -40,9 +50,14 @@ const ContactForm = (props) => {
       addContact(contact);
     }
     setContact({
-      name: '',
+      firstName: '',
+      lastName: '',
+      company: '',
+      birthday: '',
+      notes: '',
       email: '',
-      phone: '',
+      telephone: '',
+      url: '',
       contactType: 'personal'
     });
   }
@@ -54,9 +69,30 @@ const ContactForm = (props) => {
       </h2>
       <input
         type={'text'}
-        placeholder={'John Hammond'}
-        name={'name'}
-        value={name}
+        placeholder={'John'}
+        name={'firstName'}
+        value={firstName}
+        onChange={onChange}
+      />
+      <input
+        type={'text'}
+        placeholder={'Hammond'}
+        name={'lastName'}
+        value={lastName}
+        onChange={onChange}
+      />
+      <input
+        type={'text'}
+        placeholder={'Jurassic Park'}
+        name={'company'}
+        value={company}
+        onChange={onChange}
+      />
+      <input
+        type={'text'}
+        placeholder={'Date Of Birth - MM/DD/YYYY'}
+        name={'birthday'}
+        value={birthday}
         onChange={onChange}
       />
       <input
@@ -69,8 +105,23 @@ const ContactForm = (props) => {
       <input
         type={'text'}
         placeholder={'+009 411 5555'}
-        name={'phone'}
-        value={phone}
+        name={'telephone'}
+        value={telephone}
+        onChange={onChange}
+      />
+      <input
+        type={'text'}
+        placeholder={'https://jurassic.park'}
+        name={'url'}
+        value={url}
+        onChange={onChange}
+      />
+      <h5>Notes</h5>
+      <input
+        type={'text'}
+        placeholder={'Additional Notes Or Information'}
+        name={'notes'}
+        value={notes}
         onChange={onChange}
       />
       <h5>Contact Type</h5>
@@ -80,16 +131,16 @@ const ContactForm = (props) => {
         value={'personal'}
         checked={contactType === 'personal'}
         onChange={onChange}
-      />Personal{' '}
+      />{' '}Personal{' '}
       <input
         type={'radio'}
         name={'contactType'}
         value={'professional'}
         checked={contactType === 'professional'}
         onChange={onChange}
-      />Professional{' '}
+      />{' '}Professional{' '}
       <div>
-        <input type={'submit'} value={'Create Contact'} className={"btn btn-primary btn-block"}/>
+        <input type={'submit'} value={current ? 'Update Contact' : 'Create Contact'} className={"btn btn-primary btn-block"}/>
       </div>
       {current && (
         <div>

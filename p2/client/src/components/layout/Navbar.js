@@ -2,18 +2,29 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import AuthContext from '../../context/auth/Auth.context';
+import ContactContext from '../../context/contact/Contact.context';
 
 const Navbar = ({ title, icon }) => {
-  const authContext = useContext(AuthContext);
+  const
+    authContext = useContext(AuthContext),
+    contactContext = useContext(ContactContext);
+
   const {isAuthenticated, logout, user} = authContext;
+  const {clearContacts} = contactContext;
 
   const onLogout = () => {
     logout();
+    clearContacts();
   };
 
   const authenticatedLinks = (
     <>
-      <li>Hello {user && user.name}</li>
+      <li style={{marginRight: '10px'}}>
+        Hello {user && (user.firstName)}
+      </li>
+      <li>
+        <Link to={"/"}>Home</Link>
+      </li>
       <li>
         <a href={"#!"} onClick={onLogout}>
           <i className={"fas fa-sign-out-alt"}></i>
@@ -26,13 +37,10 @@ const Navbar = ({ title, icon }) => {
   const guestLinks = (
     <>
       <li>
-        <Link to={"/about"}>About</Link>
+        <Link to={"/register"}>Register</Link>
       </li>
       <li>
-        <Link to={"/about"}>Register</Link>
-      </li>
-      <li>
-        <Link to={"/about"}>Login</Link>
+        <Link to={"/login"}>Login</Link>
       </li>
     </>
   );
@@ -45,6 +53,9 @@ const Navbar = ({ title, icon }) => {
       </h1>
       <ul>
         {isAuthenticated ? authenticatedLinks : guestLinks}
+        <li>
+          <Link to={"/about"}>About</Link>
+        </li>
       </ul>
     </div>
   );

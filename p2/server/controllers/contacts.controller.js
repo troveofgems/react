@@ -5,11 +5,19 @@ const
 const _buildDocForContact = (data, insert = false, userId = null) => {
   let
     doc = {},
-    { firstName, lastName, company, telephone, email, birthday, notes, url } = data,
-    fields = [firstName, lastName, company, telephone, email, birthday, notes, url];
+    { firstName, lastName, company, telephone, email, birthday, notes, url, contactType } = data,
+    fields = {
+      "firstName": firstName, "lastName": lastName,
+      "company": company, "telephone": telephone, "email": email, "birthday": birthday,
+      "notes": notes, "url": url, "contactType": contactType
+    };
 
   if (insert) { doc.user = userId }
-  fields.forEach(field => field ? doc[`${field}`] = field : null);
+  for (const [key, value] of Object.entries(fields)) {
+    if (value) {
+      doc[`${key}`] = value;
+    }
+  }
 
   return doc;
 };
@@ -23,13 +31,15 @@ const getAllContacts = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       error: null,
-      data: contacts
+      results: contacts,
+      bac: 200
     });
-  } catch(err) {
+  } catch(err) { // Need To Expand On Error Code Here
     return res.status(err.statusCode || 500).json({
       success: false,
       error: err,
-      data: {}
+      results: {},
+      bac: 500
     });
   }
 };
@@ -47,19 +57,20 @@ const getContactById = (req, res, next) => {
 const createNewContact = async (req, res, next) => {
   try {
     let
-      document = _buildDocForContact(req.body, true, req.user.id),
-      newContact = new Contact(document);
+      document = _buildDocForContact(req.body, true, req.user.id);
+    console.log(document);
+    const newContact = new Contact(document);
 
     let contact = await newContact.save();
     return res.status(201).json({
       success: true,
-      data: contact
+      results: contact
     });
   } catch (err) {
     return res.status(err.statusCode || 500).json({
       success: false,
       error: err,
-      data: {}
+      results: {}
     });
   }
 };
@@ -70,7 +81,7 @@ const createNewContact = async (req, res, next) => {
 const updateContactById = async (req, res, next) => {
   const
     updates = _buildDocForContact(req.body),
-    { id: contactId } = req.params.id;
+    { id: contactId } = req.params;
   try {
     let contact = await Contact.findById(contactId);
     if (!contact) {
@@ -92,12 +103,12 @@ const updateContactById = async (req, res, next) => {
     }
 
     contact = await Contact.findByIdAndUpdate(contactId, { $set: updates }, { new: true });
-    res.status(200).json({ success: true, data: contact });
+    res.status(200).json({ success: true, results: contact });
   } catch(err) {
     return res.status(err.statusCode || 500).json({
       success: false,
       error: err,
-      data: {}
+      results: {}
     });
   }
 };
@@ -105,8 +116,27 @@ const updateContactById = async (req, res, next) => {
 // @route   DELETE api/contacts
 // @desc    Delete Specific User Contact
 // @access  Private
-const deleteContactById = (req, res, next) => {
-  return res.json({'task': 'delete'});
+const deleteContactById = async (req, res, next) => {
+  const { id: contactId } = req.params;
+  try {
+    let contact = await Contact.findById(contactId);
+    if (contact.user._id.toString() === req.user.id) {
+      await Contact.findByIdAndRemove({_id: contactId});
+      return res.status(200).json({
+        success: true,
+        error: null,
+        results: {},
+        bac: 200
+      });
+    }
+  } catch(err) { // Need To Expand On Error Code Here
+    return res.status(err.statusCode || 500).json({
+      success: false,
+      error: err,
+      results: {},
+      bac: 500
+    });
+  }
 };
 
 module.exports = {

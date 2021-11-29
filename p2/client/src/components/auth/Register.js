@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AlertContext from '../../context/alert/Alert.context';
 import AuthContext from '../../context/auth/Auth.context';
 
@@ -7,47 +8,49 @@ const Register = (props) => {
     authContext = useContext(AuthContext),
     alertContext = useContext(AlertContext),
     [user, setUser] = useState({
-      name: '',
+      firstName: '',
+      middleInitial: '',
+      lastName: '',
       email: '',
       password: '',
       password_confirmation: '',
-      blind_passphrase: ''
     });
 
   const { setAlert } = alertContext;
   const { register, error, clearErrors, isAuthenticated } = authContext;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      props.history.push('/');
-    }
+    if (isAuthenticated) return navigate('/');
 
     if (error) {
       setAlert(error, 'danger');
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated]);
 
   const {
-    name, email, password_confirmation, password, blind_passphrase
+    firstName, middleInitial, lastName, email, password_confirmation, password
   } = user;
 
   const onChange = evt => setUser({...user, [evt.target.name]: evt.target.value})
   const onSubmit = evt => {
     evt.preventDefault();
-    if (name === '' || email === '' || password === '') {
+    if (email === '' || password === '') {
       setAlert('Please enter all fields', 'danger');
     } else if (password !== password_confirmation) {
       setAlert('Passwords Do Not Match');
     } else {
       // Run Other Code
       register({
-        name,
+        firstName,
+        middleInitial,
+        lastName,
         email,
-        password,
-        blind_passphrase
+        password
       });
+
     }
   }
 
@@ -58,8 +61,16 @@ const Register = (props) => {
       </h1>
       <form onSubmit={onSubmit}>
         <div className={"form-group"}>
-          <label htmlFor={"name"}>Name</label>
-          <input type={"text"} name={"name"} value={name} onChange={onChange} />
+          <label htmlFor={"firstName"}>First Name</label>
+          <input type={"text"} name={"firstName"} value={firstName} onChange={onChange} />
+        </div>
+        <div className={"form-group"}>
+          <label htmlFor={"middleInitial"}>Middle Initial</label>
+          <input type={"text"} name={"middleInitial"} value={middleInitial} onChange={onChange} />
+        </div>
+        <div className={"form-group"}>
+          <label htmlFor={"lastName"}>Last Name</label>
+          <input type={"text"} name={"lastName"} value={lastName} onChange={onChange} />
         </div>
         <div className={"form-group"}>
           <label htmlFor={"email"}>Email Address</label>
@@ -72,15 +83,6 @@ const Register = (props) => {
         <div className={"form-group"}>
           <label htmlFor={"password_confirmation"}>Password Confirmation</label>
           <input type={"password"} name={"password_confirmation"} value={password_confirmation} onChange={onChange} />
-        </div>
-        <div className={"form-group"}>
-          <label htmlFor={"blind_passphrase"}>Masking Passphrase*</label>
-          <small>
-            You will not be asked to remember the masking passphrase you enter when you register. I recommend you
-            keyboard mash until you've reached the max character limit allowed for the field. This feature is in beta
-            for enhanced application security.
-          </small>
-          <input type={"password"} name={"blind_passphrase"} value={blind_passphrase} onChange={onChange} />
         </div>
         <div>
           <input type={'submit'} value={'Register Account'} className={"btn btn-primary btn-block"}/>
