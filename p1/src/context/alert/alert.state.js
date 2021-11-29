@@ -19,7 +19,7 @@ const AlertState = props => {
     setTimeout(() => dispatch({type: REMOVE_ALERT}), 5000);
   }
 
-  // Return Github Context
+  // Return Github context
   return (
     <AlertContext.Provider
       value={{

@@ -81,7 +81,7 @@ const GithubState = props => {
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
 
-  // Return Github Context
+  // Return Github context
   return (
     <GithubContext.Provider
       value={{

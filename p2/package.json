@@ -1,0 +1,23 @@
+{
+  "name": "fileofax",
+  "version": "1.0.0",
+  "description": "MonoRepo Project",
+  "main": "server",
+  "author": "ttog",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "client": "yarn --cwd client start",
+    "client-install": "yarn --cwd client install",
+    "server": "yarn --cwd server start",
+    "server-install": "yarn --cwd server install",
+    "install-project-deps": "yarn client-install && yarn server-install",
+    "concur": "concurrently \"yarn run client\" \"yarn run server\""
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "concurrently": "^6.4.0"
+  }
+}

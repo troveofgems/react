@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import GithubContext from "../../../context/github/github.context";
 import AlertContext from "../../../context/alert/alert.context";
 
-// Refactored To Use Context Hook
+// Refactored To Use context Hook
 const SearchBar = () => {
   const
     alertContext = useContext(AlertContext),
