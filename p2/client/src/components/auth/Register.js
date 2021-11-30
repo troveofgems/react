@@ -31,7 +31,7 @@ const Register = (props) => {
   }, [error, isAuthenticated]);
 
   const {
-    firstName, middleInitial, lastName, email, password_confirmation, password
+    firstName, middleInitial, lastName, email, password, password_confirmation
   } = user;
 
   const onChange = evt => setUser({...user, [evt.target.name]: evt.target.value})

@@ -34,13 +34,15 @@ const Login = () => {
 
   const onChange = evt => setUser({...user, [evt.target.name]: evt.target.value})
   const onSubmit = evt => {
+    console.log('tokenRequestType', tokenRequestType);
     evt.preventDefault();
     if (email === '' || password === '') {
       setAlert('Please fill in all fields', 'danger');
     } else {
       login({
         email,
-        password
+        password,
+        tokenRequestType
       });
     }
   }

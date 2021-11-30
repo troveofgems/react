@@ -1,3 +1,4 @@
+require('./config/_env.js');
 const
   path = require('path'),
   PORT = process.env.PORT || 5000,

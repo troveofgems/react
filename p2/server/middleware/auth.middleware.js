@@ -1,6 +1,4 @@
-const
-  jwt = require('jsonwebtoken');
-  //config = require('config');
+const jwt = require('jsonwebtoken');
 
 module.exports.jwtProtectedRoute = function(req, res, next) {
   const token = req.header('x-auth-token');

@@ -2,7 +2,6 @@ const
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken'),
   User = require('../db/models/User'),
-  config = require('config'),
   {
     sendAPIResponse
   } = require('../utils/serverResponse');
@@ -31,7 +30,7 @@ const registerUser = async (req, res, next) => {
         }
     };
 
-    jwt.sign(payload, config.get('JWT_STAMP'), {
+    jwt.sign(payload, process.env.JWT_STAMP, {
       expiresIn: 3600 // Hour
     }, (err, token) => {
       return sendAPIResponse(res, 201, { token });

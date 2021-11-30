@@ -2,7 +2,6 @@ const
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken'),
   User = require('../db/models/User'),
-  config = require('config'),
   {
     sendAPIResponse
   } = require('../utils/serverResponse');
@@ -22,9 +21,10 @@ const getLoginUserData = async (req, res, next) => {
 
 // @route   POST api/auth
 // @desc    Log User Into Application
-// @access  Private
+// @access  Public
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, tokenRequestType } = req.body;
+
   try {
     let userAccount = await User.findOne({ email });
     if (!userAccount) {
@@ -38,7 +38,7 @@ const login = async (req, res, next) => {
       return sendAPIResponse(res, 400, data);
     }
 
-    return useJWT(res, userAccount);
+    return useJWT(res, userAccount, tokenRequestType);
   } catch (err) {
     console.log('Err On Login', err);
   }

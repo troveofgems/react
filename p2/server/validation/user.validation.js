@@ -11,7 +11,7 @@ const registrationData = {
       .email()
       .required(),
     password: Joi.string()
-      .regex(/[a-zA-Z0-9]{16,32}/)
+      //.regex(/[a-zA-Z0-9]{6,32}/)
       .required()
   })
 };
@@ -22,7 +22,8 @@ const loginData = {
       .email()
       .required(),
     password: Joi.string()
-      .required()
+      .required(),
+    tokenRequestType: Joi.string()
   })
 };
 
