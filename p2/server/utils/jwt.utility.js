@@ -1,6 +1,6 @@
 const
   jwt = require("jsonwebtoken"),
-  config = require("config"),
+  //config = require("config"),
   {
     sendAPIResponse
   } = require("./serverResponse");
@@ -12,7 +12,7 @@ module.exports.useJWT = (res, userData) => {
     }
   };
 
-  jwt.sign(payload, config.get('JWT_STAMP'), {
+  jwt.sign(payload, process.env.JWT_STAMP /*config.get('JWT_STAMP')*/, {
     expiresIn: 3600 // Hour
   }, (err, token) => {
     return sendAPIResponse(res, 200, { token });

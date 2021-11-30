@@ -1,6 +1,6 @@
 const
-  jwt = require('jsonwebtoken'),
-  config = require('config');
+  jwt = require('jsonwebtoken');
+  //config = require('config');
 
 module.exports.jwtProtectedRoute = function(req, res, next) {
   const token = req.header('x-auth-token');
@@ -9,7 +9,7 @@ module.exports.jwtProtectedRoute = function(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, config.get('JWT_STAMP'));
+    const decoded = jwt.verify(token, process.env.JWT_STAMP /*config.get('JWT_STAMP')*/);
     req.user = decoded.user;
     next();
   } catch (err) {
