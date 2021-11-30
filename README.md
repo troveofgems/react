@@ -5,7 +5,7 @@
 
 For a more detailed explanation please see the [P1 Folder](https://github.com/troveofgems/react/tree/main/p1).
 
-## Project 2: File-O-Fax - In Progress
+## Project 2: File-O-Fax
 [File-O-Fax Demo](https://github.com/troveofgems/react/tree/main/p1)
 
 For a more detailed explanation please see the [P2 Folder](https://github.com/troveofgems/react/tree/main/p2).
