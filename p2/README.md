@@ -18,6 +18,6 @@ Branch rp2
 3. DB Models: Users, Contacts, Auth
 4. Hooks: useContext, useReducer, useState, useEffect, useRef, useNavigation
 5. Middleware, Password Hashing & Use of JWT Auth / Privatized Routing (React-Router-Dom v6)
-6. Contact CRUD - Create/Read/Update/Delete
+6. Contact CRUD - Create/Read/Update/Delete - Leveraged with the [Axios](https://axios-http.com/docs/intro) Client.
 7. Front-end Filtering
 8. Deployed to Heroku

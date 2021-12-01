@@ -1,0 +1,37 @@
+{
+  "logs": [
+    {
+      "_id": 1,
+      "message": "Changed HDD on workstation 127",
+      "triage": false,
+      "date": "11-30-2021",
+      "tech": "Dustin Greco"
+    },
+    {
+      "_id": 2,
+      "message": "Workstation 144 Not Pinging",
+      "triage": true,
+      "date": "11-30-2021",
+      "tech": "Dustin Greco"
+    },
+    {
+      "_id": 3,
+      "message": "8gb RAM Chip added to laptop",
+      "triage": false,
+      "date": "11-30-2021",
+      "tech": "Sandy Saunders"
+    }
+  ],
+  "techs": [
+    {
+     "_id": 1001,
+      "firstName": "Dustin",
+      "lastName": "Greco"
+    },
+    {
+      "_id": 1002,
+      "firstName": "Dustin",
+      "lastName": "Greco"
+    }
+  ]
+}
