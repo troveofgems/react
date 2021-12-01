@@ -1,5 +1,5 @@
 # Basic Ticket Logger
-[Application Demo]()
+**Demo From The Local Machine**
 
 # Purpose
 The purpose of this project is to delve into and explore App-Level state with Redux.
