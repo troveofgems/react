@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import Preloader from "../layout/Preloader";
 import LogItem from "./LogItem";
+import PropTypes from 'prop-types';
 
-const AppLogs = () => {
-  const [logs, setLogs] = useState([]);
-  const [loading, setLoading] = useState(false);
+import { getLogsFromServerViaRedux } from "../../redux/actions/log.actions";
 
+const AppLogs = ({ log: {logs, loading}, getLogsFromServerViaRedux }) => {
   useEffect(() => {
-    getLogs();
+    getLogsFromServerViaRedux();
     // eslint-disable-next-line
   }, []);
 
-  const getLogs = async () => {
-    setLoading(true);
-    const
-      res = await fetch('/logs'),
-      data = await res.json(); // When using FETCH you must use this to return a json formatted response (unlike axios)
-
-    console.log('Data is: ', data);
-    setLogs(data);
-    setLoading(false);
-  };
-
-  if (loading) {
+  if (loading || logs === null) {
     return <Preloader />;
   }
 
@@ -36,10 +26,19 @@ const AppLogs = () => {
       )
       :
       (
-        logs.map(log => <LogItem log={log} key={log._id} />)
+        logs.map(log => <LogItem log={log} key={log.id} />)
       )}
     </ul>
   );
 };
 
-export default AppLogs;
+AppLogs.propTypes = {
+  log: PropTypes.object.isRequired,
+  getLogsFromServerViaRedux: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  log: state.log
+});
+
+export default connect(mapStateToProps, { getLogsFromServerViaRedux })(AppLogs);

@@ -1,37 +1,23 @@
 {
   "logs": [
     {
-      "_id": 1,
-      "message": "Changed HDD on workstation 127",
-      "triage": false,
-      "date": "11-30-2021",
-      "tech": "Dustin Greco"
-    },
-    {
-      "_id": 2,
-      "message": "Workstation 144 Not Pinging",
-      "triage": true,
-      "date": "11-30-2021",
-      "tech": "Dustin Greco"
-    },
-    {
-      "_id": 3,
-      "message": "8gb RAM Chip added to laptop",
-      "triage": false,
-      "date": "11-30-2021",
-      "tech": "Sandy Saunders"
+      "id": 1,
+      "message": "Migrate workstation OS from CentOS-7 sunset to Fedora 32",
+      "attention": true,
+      "tech": "Dustin Greco",
+      "date": "2021-12-01T21:38:40.941Z"
     }
   ],
-  "techs": [
+  "available_technicians": [
     {
-     "_id": 1001,
       "firstName": "Dustin",
-      "lastName": "Greco"
+      "lastName": "Greco",
+      "id": 2
     },
     {
-      "_id": 1002,
-      "firstName": "Dustin",
-      "lastName": "Greco"
+      "firstName": "Travis",
+      "lastName": "Belle",
+      "id": 4
     }
   ]
 }

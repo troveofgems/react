@@ -1,24 +1,24 @@
-# File-O-Fax
+# Basic Ticket Logger
 [Application Demo]()
 
 # Purpose
 The purpose of this project is to delve into and explore App-Level state with Redux.
 
-The application leverages basic authentication using JWT Tokens to provide a user the ability
-to sign up to the application, and access, change, & store user related information to the MONGODB
-hosted contacts database.
+The application leverages json-web-server as the backend for a quickly scalable front-end. Front-end fetches
+a list of logs from the "database". User can add, edit, & delete logs, as well as, add and delete technicians
+from the "database" as well.
 
-A baseline styling has been used.
+Materialize CSS styling has been used.
 
 # Features
 
-Branch rp2
+Branch p3-init
 -------------------
-1. Node/Express Server, MongoDB Database
-2. Front & Backend Implementation
-3. DB Models: Users, Contacts, Auth
-4. Hooks: useContext, useReducer, useState, useEffect, useRef
-5. Middleware, Password Hashing & Use of JWT Auth / Privatized Routing (React-Router-Dom v6)
-6. Contact CRUD - Create/Read/Update/Delete
-7. Front-end Filtering
-8. Deployed to Heroku
+1. Backend - [json-server](https://www.npmjs.com/package/json-server)
+2. Frontend React managed with useState() hook.
+3. Models: Logs, Technicians
+4. Hooks: useState, useEffect, useRef
+
+Branch p3wRedux
+-------------------
+1. Application refactored to leverage the Redux library for App-State management.

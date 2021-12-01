@@ -11,6 +11,6 @@ For a more detailed explanation please see the [P1 Folder](https://github.com/tr
 For a more detailed explanation please see the [P2 Folder](https://github.com/troveofgems/react/tree/main/p2).
 
 ## Project 3: Unspecified React Application - Not Yet Complete
-For the demo: [Coming Soon]()
+For the demo: Via Local Machine
 
 For a more detailed explanation please see the [P3 Folder](https://github.com/troveofgems/react/tree/main/p3).

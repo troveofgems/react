@@ -3,6 +3,9 @@ import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min';
 import './App.css';
 
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 import NavSearch from "./components/layout/Nav.Search";
 import AppLogs from "./components/appLogs/Logs";
 import AddButton from "./components/layout/AddButton";
@@ -16,7 +19,7 @@ const App = () => {
     M.AutoInit(); // Inits Material JS
   });
   return (
-    <>
+    <Provider store={store}>
       <NavSearch />
       <div className={"container"}>
         <AddButton />
@@ -26,7 +29,7 @@ const App = () => {
         <TechListModal />
         <AppLogs />
       </div>
-    </>
+    </Provider>
   );
 }
 
